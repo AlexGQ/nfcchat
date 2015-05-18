@@ -26,8 +26,7 @@ public class MainActivity extends FragmentActivity implements CreateNdefMessageC
 	private static final int MESSAGE_SENT = 1;
 	private TextView receiveText;
 	private TextView sendText;
-	//private SendDataNFC mSendDataNFC;
-	
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -63,9 +62,7 @@ public class MainActivity extends FragmentActivity implements CreateNdefMessageC
 		 
 		// You can be pretty confident that the intent will not be null here.
 		 Intent intent = getIntent();
-		 //receiveText.setText(ReceiveDataNFC.data);
 
-		 // Get the extras (if there are any)
 		 Bundle extras = intent.getExtras();
 		 if (extras != null) {
 		     if (extras.containsKey("str")) {
@@ -107,10 +104,9 @@ public class MainActivity extends FragmentActivity implements CreateNdefMessageC
 	@Override
 	public NdefMessage createNdefMessage(NfcEvent event) {
 		
-		//List<Contact> contactListToShare;
+
 		NdefMessage msg = null;
 		
-		//String cardData = "Hola como estas?";
 		String cardData = sendText.getText().toString();
 		
 		msg = new NdefMessage(
@@ -148,7 +144,7 @@ public class MainActivity extends FragmentActivity implements CreateNdefMessageC
 	    
 	    case MESSAGE_SENT:
 	        //Toast.makeText(getApplicationContext(), "Card(s) sent!", Toast.LENGTH_LONG).show();
-	        Toast.makeText(getApplicationContext(), "Message was sent", Toast.LENGTH_LONG).show();
+	        Toast.makeText(getApplicationContext(), "Your message was sent", Toast.LENGTH_LONG).show();
 	        break;
 	    }
 	}
@@ -166,56 +162,4 @@ public class MainActivity extends FragmentActivity implements CreateNdefMessageC
 	        NdefRecord.TNF_MIME_MEDIA, mimeBytes, new byte[0], payload);
 	return mimeRecord;
 	}
-		
-//-----------------------------------------------------------------------------------------------------------------------------------
-// Receive Data by NFC    
-//-----------------------------------------------------------------------------------------------------------------------------------    
-	/*
-	@Override
-	public void onNewIntent(Intent intent) {
-		// onResume gets called after this to handle the intent
-		setIntent(intent);
-	}
-	
-	
-	/**
-	* Parses the NDEF Message from the intent and prints to the TextView
-	*/
-	/*void processIntent(Intent intent) {
-	
-		//boolean updateList;
-		//UtilsListView UtilsLiVim = new UtilsListView();
-		
-		Parcelable[] rawMsgs = intent.getParcelableArrayExtra(
-		        NfcAdapter.EXTRA_NDEF_MESSAGES);
-		
-		
-		// only one message sent during the beam
-		NdefMessage msg = (NdefMessage) rawMsgs[0];
-		if (msg != null)
-		{
-			// record 0 contains the MIME type, record 1 is the AAR, if present
-			String str = new String(msg.getRecords()[0].getPayload());
-	    	receiveText.setText(str);
-			
-		}else
-		{
-			Toast.makeText(getApplicationContext(), "Not message received", Toast.LENGTH_LONG).show();
-		}
-	}
-	
-	
-    @Override
-    protected void onResume() {
-        super.onResume();
-       	// Check to see that the Activity started due to an Android Beam
-    	//Toast.makeText(getApplicationContext(), "The message was received", Toast.LENGTH_LONG).show();
-        if (NfcAdapter.ACTION_NDEF_DISCOVERED.equals(getIntent().getAction())) {
-    	    processIntent(getIntent());
-    	}
-        
-        
-
-    }
-*/
 }

@@ -16,8 +16,6 @@ public class ReceiveDataNFC extends FragmentActivity{
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.receive_message);
-        Toast.makeText(getApplicationContext(), "The message was received", Toast.LENGTH_LONG).show();
-          
     }
 
 	@Override
@@ -31,24 +29,21 @@ public class ReceiveDataNFC extends FragmentActivity{
 	* Parses the NDEF Message from the intent and prints to the TextView
 	*/
 	void processIntent(Intent intent) {
-	
-		//boolean updateList;
-		//UtilsListView UtilsLiVim = new UtilsListView();
-		
+
 		Parcelable[] rawMsgs = intent.getParcelableArrayExtra(
 		        NfcAdapter.EXTRA_NDEF_MESSAGES);
 		
-		
-		// only one message sent during the beam
+		// Only one message sent during the beam
 		NdefMessage msg = (NdefMessage) rawMsgs[0];
 		if (msg != null)
 		{
 			// record 0 contains the MIME type, record 1 is the AAR, if present
 			String str = new String(msg.getRecords()[0].getPayload());
-			Toast.makeText(getApplicationContext(), "The message was received", Toast.LENGTH_LONG).show();
+
+			Toast.makeText(getApplicationContext(), "Your message was received", Toast.LENGTH_LONG).show();
+
 			Intent i = new Intent(this, MainActivity.class);
 			i.putExtra("str", str);
-			//data = str;
 	        startActivity(i);
 			
 		}else
@@ -62,14 +57,9 @@ public class ReceiveDataNFC extends FragmentActivity{
     protected void onResume() {
         super.onResume();
        	// Check to see that the Activity started due to an Android Beam
-    	Toast.makeText(getApplicationContext(), "The message was received", Toast.LENGTH_LONG).show();
-        if (NfcAdapter.ACTION_NDEF_DISCOVERED.equals(getIntent().getAction())) {
+         if (NfcAdapter.ACTION_NDEF_DISCOVERED.equals(getIntent().getAction())) {
     	    processIntent(getIntent());
     	}
-        
-        
-
     }
-
 
 }
